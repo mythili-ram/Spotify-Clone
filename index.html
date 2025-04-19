@@ -1,333 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spotify Clone</title>
+  <title>Spotify – Web Player: Music for everyone</title>
   <style>
-    /* RESET */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root {
+      --bg: #121212;
+      --text: #fff;
+      --accent: #1ed760;
+      --hero-gradient: linear-gradient(135deg, #1edd60 20%, #1db954 80%);
     }
 
+    body.light-mode {
+      --bg: #fff;
+      --text: #121212;
+      --accent: #1ed760;
+      --hero-gradient: linear-gradient(135deg, #a2f5cb 20%, #69e1a8 80%);
+    }
+
+    html,
     body {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background-color: #121212;
-      color: #fff;
-      line-height: 1.5;
+      margin: 0;
+      font-family: "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    header, footer {
-      padding: 20px 40px;
-    }
-
-    /* NAVBAR */
     nav {
+      background: #000;
+      padding: 20px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #000;
+      flex-wrap: wrap;
     }
 
-    .nav-left, .nav-right {
+    .nav-menu {
       display: flex;
-      gap: 20px;
+      gap: 25px;
+    }
+
+    .nav-menu a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      font-weight: bold;
+    }
+
+    .nav-menu a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .nav-menu a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 10px;
       align-items: center;
     }
 
-    .nav-left img {
-      height: 40px;
+    button {
+      cursor: pointer;
+      font-weight: bold;
     }
 
-    .nav-right a {
-      font-weight: 700;
-      font-size: 14px;
-      color: #fff;
-    }
-
-    .nav-right a:hover {
-      color: #1db954;
-    }
-
-    /* HERO SECTION */
-    .hero {
-      background: linear-gradient(135deg, #1db954, #1ed760);
-      padding: 100px 40px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: 60px;
-      font-weight: 900;
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      margin-bottom: 40px;
-    }
-
-    .hero button {
-      background-color: #000;
-      color: #1db954;
-      font-weight: 700;
-      padding: 14px 30px;
+    .signup-btn {
+      background: #fff;
+      color: #000;
       border: none;
       border-radius: 999px;
-      cursor: pointer;
-      font-size: 16px;
+      padding: 10px 20px;
     }
 
-    .hero button:hover {
-      background-color: #1db954;
-      color: #000;
-    }
-
-    /* FOOTER */
-    footer {
-      background-color: #000;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding-top: 40px;
-      padding-bottom: 40px;
-    }
-
-    .footer-col {
-      flex: 1;
-      min-width: 180px;
-      margin-bottom: 20px;
-    }
-
-    .footer-col h4 {
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .footer-col a {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 8px;
-      color: #b3b3b3;
-    }
-
-    .footer-col a:hover {
+    .login-btn {
+      background: none;
       color: #fff;
+      border: 1px solid #fff;
+      border-radius: 999px;
+      padding: 10px 20px;
     }
 
-    /* AI ASSISTANT */
-    .ai-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: #1db954;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: grab;
-      z-index: 1000;
-    }
-
-    .ai-button svg {
-      fill: #fff;
-      width: 24px;
-      height: 24px;
-    }
-
-    .ai-chat {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 300px;
-      max-height: 400px;
-      background: #282828;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      display: none;
-      flex-direction: column;
-      z-index: 999;
-    }
-
-    .ai-chat-header {
-      background: #1db954;
-      padding: 10px;
-      font-weight: bold;
+    #theme-toggle {
+      margin-left: 10px;
+      background: var(--accent);
       color: #000;
-    }
-
-    .ai-chat-messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-    }
-
-    .ai-chat-input {
-      display: flex;
-      border-top: 1px solid #444;
-    }
-
-    .ai-chat-input input {
-      flex: 1;
-      padding: 10px;
-      background: #121212;
-      color: #fff;
       border: none;
-    }
-
-    .ai-chat-input button {
-      padding: 10px;
-      background: #1db954;
-      border: none;
-      cursor: pointer;
-      color: #000;
-    }
-
-    .message {
-      margin-bottom: 10px;
-    }
-
-    .user {
-      text-align: right;
-    }
-
-    .bot {
-      text-align: left;
-      color: #1db954;
+      border-radius: 999px;
+      padding: 10px 15px;
     }
   </style>
 </head>
-<body>
 
-  <!-- NAVBAR -->
-  <nav>
+<body>
+  <nav role="navigation" aria-label="Main navigation">
     <div class="nav-left">
-      <img src="data:image/svg+xml;base64,[BASE64_LOGO]" alt="Spotify Logo" />
+      <strong style="font-size: 1.5em;">Spotify</strong>
+    </div>
+    <div class="nav-menu" role="menubar">
+      <a role="menuitem" href="#">Premium</a>
+      <a role="menuitem" href="#">Support</a>
+      <a role="menuitem" href="#">Download</a>
     </div>
     <div class="nav-right">
-      <a href="#">Premium</a>
-      <a href="#">Support</a>
-      <a href="#">Download</a>
-      <a href="#">Sign Up</a>
-      <a href="#">Log In</a>
+      <button class="signup-btn">Sign up</button>
+      <button class="login-btn">Log in</button>
+      <button id="theme-toggle" aria-label="Toggle theme">Toggle Theme</button>
     </div>
   </nav>
+  <main class="hero" role="main">
+    <style>
+      .hero {
+        text-align: center;
+        padding: 100px 20px;
+        background: var(--hero-gradient);
+      }
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <h1>Listening is everything</h1>
-    <p>Millions of songs and podcasts. No credit card needed.</p>
-    <button>Get Spotify Free</button>
-  </section>
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+      }
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <a href="#">About</a>
-      <a href="#">Jobs</a>
-      <a href="#">For the Record</a>
-    </div>
-    <div class="footer-col">
-      <h4>Communities</h4>
-      <a href="#">For Artists</a>
-      <a href="#">Developers</a>
-      <a href="#">Advertising</a>
-    </div>
-    <div class="footer-col">
-      <h4>Useful Links</h4>
-      <a href="#">Support</a>
-      <a href="#">Web Player</a>
-      <a href="#">Free Mobile App</a>
-    </div>
+      .hero p {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+      }
+
+      .hero button {
+        font-size: 1.1rem;
+        padding: 15px 40px;
+        border-radius: 999px;
+        background: #fff;
+        color: var(--accent);
+        border: none;
+        transition: transform 0.2s ease;
+      }
+
+      .hero button:hover {
+        transform: scale(1.08);
+      }
+    </style>
+    <h1>Music for everyone.</h1>
+    <p>Millions of songs. No credit card needed.</p>
+    <button>Sign up free</button>
+  </main>
+
+  <footer role="contentinfo" style="background:#000;padding:40px;text-align:center;">
+    <p style="color:#aaa;">&copy; 2025 Spotify AB — This is a clone demo.</p>
   </footer>
 
-  <!-- AI MUSIC ASSISTANT -->
-  <div class="ai-button" id="ai-btn" title="Music Assistant">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm0 20c4.418 0 8-2.686 8-6h-2c0 2.21-2.239 4-6 4s-6-1.79-6-4H4c0 3.314 3.582 6 8 6z"/></svg>
-  </div>
-
-  <div class="ai-chat" id="ai-chat">
-    <div class="ai-chat-header">AI Music Assistant</div>
-    <div class="ai-chat-messages" id="chat-messages"></div>
-    <div class="ai-chat-input">
-      <input type="text" id="user-input" placeholder="Ask me to build a playlist..." />
-      <button id="send-btn">Send</button>
+  <!-- AI Assistant -->
+  <div id="ai-assist-root" style="position: fixed; bottom: 30px; right: 30px; z-index: 999;">
+    <button id="ai-draggable-btn" aria-label="Open AI Assistant"
+      style="width: 60px; height: 60px; border-radius: 50%; border: none; background: var(--accent); color: #000; font-weight: bold; cursor: grab;">
+      AI
+    </button>
+    <div id="ai-widget" role="dialog" aria-modal="true" aria-label="AI Music Assistant"
+      style="display:none; position: absolute; right: 0; bottom: 0; width: 360px; max-height: 70vh; background: #fff; color: #000; border-radius: 20px; box-shadow: 0 6px 28px #0005; overflow: hidden; display: flex; flex-direction: column;">
+      <div
+        style="padding: 16px; font-weight: bold; background: #f2f2f2; display: flex; justify-content: space-between;">
+        <span id="ai-header">Music Assistant</span>
+        <button class="ai-close" style="border:none;background:none;font-size:1.2rem;cursor:pointer;">×</button>
+      </div>
+      <div class="ai-chat-history" style="padding: 15px; flex:1; overflow-y:auto;"></div>
+      <form class="ai-chat-input-row" style="padding: 12px; display: flex; gap: 8px;">
+        <button type="button" class="ai-mic-btn" aria-label="Start voice" style="padding: 8px;">🎙</button>
+        <input name="prompt" type="text" required placeholder="Ask me for a playlist"
+          style="flex:1;padding: 8px;border-radius: 20px;border: 1px solid #ccc;" />
+        <button type="submit" class="ai-send-btn" aria-label="Send" style="padding: 8px;">➤</button>
+      </form>
     </div>
   </div>
-
   <script>
-    // Toggle Chat
-    const aiBtn = document.getElementById('ai-btn');
-    const aiChat = document.getElementById('ai-chat');
-    const sendBtn = document.getElementById('send-btn');
-    const chatMessages = document.getElementById('chat-messages');
-    const userInput = document.getElementById('user-input');
+    (function () {
+      const aiBtn = document.getElementById('ai-draggable-btn');
+      const aiWidget = document.getElementById('ai-widget');
+      const historyDiv = aiWidget.querySelector('.ai-chat-history');
+      const inputForm = aiWidget.querySelector('.ai-chat-input-row');
+      const inputBox = inputForm.elements['prompt'];
+      const micBtn = aiWidget.querySelector('.ai-mic-btn');
+      const closeBtn = aiWidget.querySelector('.ai-close');
+      const root = document.getElementById('ai-assist-root');
 
-    aiBtn.onclick = () => {
-      aiChat.style.display = aiChat.style.display === 'flex' ? 'none' : 'flex';
-    };
+      let dragging = false, offset = { x: 0, y: 0 }, lastPos = { x: null, y: null };
 
-    sendBtn.onclick = () => {
-      const query = userInput.value.trim();
-      if (!query) return;
-      appendMessage(query, 'user');
-      userInput.value = '';
-      setTimeout(() => {
-        const mockResponse = generateMockPlaylist(query);
-        appendMessage(mockResponse, 'bot');
-      }, 1000);
-    };
-
-    function appendMessage(msg, type) {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `message ${type}`;
-      msgDiv.innerText = msg;
-      chatMessages.appendChild(msgDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function generateMockPlaylist(query) {
-      return `Here's a playlist for: "${query}"\n1. Focus Beats\n2. Lofi Coding\n3. Deep Work Sessions\n4. Ambient Concentration`;
-    }
-
-    // Optional: Make button draggable
-    aiBtn.onmousedown = function (e) {
-      e.preventDefault();
-      let shiftX = e.clientX - aiBtn.getBoundingClientRect().left;
-      let shiftY = e.clientY - aiBtn.getBoundingClientRect().top;
-
-      function moveAt(pageX, pageY) {
-        aiBtn.style.left = pageX - shiftX + 'px';
-        aiBtn.style.top = pageY - shiftY + 'px';
-        aiBtn.style.bottom = 'auto';
-        aiBtn.style.right = 'auto';
-        aiBtn.style.position = 'fixed';
+      function setBtnPos(x, y) {
+        root.style.right = `${x}px`;
+        root.style.bottom = `${y}px`;
+        lastPos = { x, y };
+        localStorage.setItem('ai-btn-pos', JSON.stringify(lastPos));
       }
 
-      function onMouseMove(e) {
-        moveAt(e.pageX, e.pageY);
-      }
+      // Restore position
+      const savedPos = JSON.parse(localStorage.getItem('ai-btn-pos') || 'null');
+      if (savedPos) setBtnPos(savedPos.x, savedPos.y);
 
-      document.addEventListener('mousemove', onMouseMove);
+      aiBtn.addEventListener('mousedown', (e) => {
+        dragging = true;
+        const rect = root.getBoundingClientRect();
+        offset.x = e.clientX - rect.right;
+        offset.y = e.clientY - rect.bottom;
+        document.body.style.userSelect = 'none';
+      });
 
-      aiBtn.onmouseup = function () {
-        document.removeEventListener('mousemove', onMouseMove);
-        aiBtn.onmouseup = null;
+      window.addEventListener('mousemove', (e) => {
+        if (!dragging) return;
+        let x = window.innerWidth - e.clientX - offset.x - aiBtn.offsetWidth / 2;
+        let y = window.innerHeight - e.clientY - offset.y - aiBtn.offsetHeight / 2;
+        setBtnPos(Math.max(0, Math.min(x, window.innerWidth)), Math.max(0, Math.min(y, window.innerHeight)));
+      });
+
+      window.addEventListener('mouseup', () => {
+        dragging = false;
+        document.body.style.userSelect = '';
+      });
+
+      // Show/hide widget
+      aiBtn.onclick = () => {
+        aiWidget.style.display = 'flex';
+        setTimeout(() => inputBox.focus(), 100);
       };
-    };
+      closeBtn.onclick = () => aiWidget.style.display = 'none';
 
-    aiBtn.ondragstart = () => false;
+      // Chat bubbles
+      function addBubble(type, text) {
+        const bubble = document.createElement('div');
+        bubble.textContent = text;
+        bubble.style.padding = '8px 12px';
+        bubble.style.borderRadius = '14px';
+        bubble.style.marginBottom = '10px';
+        bubble.style.maxWidth = '80%';
+        bubble.style.background = type === 'user' ? '#e3fbe7' : '#d6d6d6';
+        bubble.style.alignSelf = type === 'user' ? 'flex-end' : 'flex-start';
+        historyDiv.appendChild(bubble);
+        historyDiv.scrollTop = historyDiv.scrollHeight;
+      }
+
+      function saveChat() {
+        localStorage.setItem('ai-chat', historyDiv.innerHTML);
+      }
+
+      function loadChat() {
+        historyDiv.innerHTML = localStorage.getItem('ai-chat') || '';
+      }
+
+      loadChat();
+
+      inputForm.onsubmit = (e) => {
+        e.preventDefault();
+        const val = inputBox.value.trim();
+        if (!val) return;
+        addBubble('user', val);
+        inputBox.value = '';
+        addBubble('ai', `Here's a playlist for: "${val}"`);
+        saveChat();
+      };
+
+      // Voice-to-text
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        const recognizer = new SpeechRecognition();
+        recognizer.lang = 'en-US';
+        recognizer.interimResults = false;
+
+        micBtn.onclick = () => {
+          recognizer.start();
+          micBtn.textContent = '⏺️';
+        };
+
+        recognizer.onresult = function (e) {
+          const transcript = e.results[0][0].transcript;
+          inputBox.value = transcript;
+          inputForm.dispatchEvent(new Event('submit'));
+        };
+
+        recognizer.onend = () => {
+          micBtn.textContent = '🎙';
+        };
+      }
+
+      // Theme toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      themeToggle.onclick = () => {
+        document.body.classList.toggle('light-mode');
+        localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+      };
+      if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-mode');
+      }
+
+      // Close widget with Escape
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') aiWidget.style.display = 'none';
+      });
+    })();
   </script>
 </body>
+
 </html>
