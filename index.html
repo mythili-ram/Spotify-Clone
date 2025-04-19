@@ -2,835 +2,332 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spotify - Web Player: Music for everyone</title>
-  <!-- SpotifyMixUI Font -->
-  <link href="https://ext.same-assets.com/2220852004/90846322.woff" rel="preload" as="font" crossorigin>
-  <link href="https://ext.same-assets.com/2220852004/3069425822.woff" rel="preload" as="font" crossorigin>
-  <link href="https://ext.same-assets.com/2220852004/1056762663.woff" rel="preload" as="font" crossorigin>
-
+  <title>Spotify Clone</title>
   <style>
-    @font-face {
-      font-family: 'SpotifyMixUI';
-      src: url('https://ext.same-assets.com/2220852004/90846322.woff') format('woff'),
-           url('https://ext.same-assets.com/2220852004/3069425822.woff') format('woff'),
-           url('https://ext.same-assets.com/2220852004/1056762663.woff') format('woff');
-      font-weight: 400 900;
-      font-display: swap;
-    }
-    html, body {
+    /* RESET */
+    *, *::before, *::after {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: #121212;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #121212;
       color: #fff;
-      font-family: 'SpotifyMixUI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      min-height: 100vh;
+      line-height: 1.5;
     }
-    body { display: flex; flex-direction: column; min-height: 100vh; }
-    /* NAVIGATION BAR */
-    .nav {
-      width: 100%;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 32px;
-      height: 80px;
-      z-index: 10;
-    }
-    .nav .nav-left {
-      display: flex;
-      align-items: center;
-    }
-    .spotify-logo {
-      width: 135px;
-      height: 40px;
-      display: inline-block;
-      margin-right: 40px;
-    }
-    .nav-menu {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      font-size: 16px;
-      font-weight: 700;
-    }
-    .nav-menu a {
-      color: #fff;
+
+    a {
       text-decoration: none;
-      padding: 8px 0;
-      position: relative;
-      transition: color 0.15s;
+      color: inherit;
     }
-    .nav-menu a:hover, .nav-menu a:focus {
-      color: #1ed760;
+
+    header, footer {
+      padding: 20px 40px;
     }
-    .nav .nav-right {
+
+    /* NAVBAR */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #000;
+    }
+
+    .nav-left, .nav-right {
       display: flex;
       gap: 20px;
       align-items: center;
     }
-    .nav-login {
+
+    .nav-left img {
+      height: 40px;
+    }
+
+    .nav-right a {
+      font-weight: 700;
+      font-size: 14px;
       color: #fff;
-      background: none;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: color 0.15s;
-      padding: 8px 22px;
-      border-radius: 30px;
     }
-    .nav-login:hover,
-    .nav-login:focus { color: #1ed760; background: #222; }
-    .nav-signup {
-      color: #121212;
-      background: #fff;
-      border: none;
-      border-radius: 9999px;
-      font-size: 16px;
-      padding: 8px 28px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
-      transition: background .15s,color .15s;
+
+    .nav-right a:hover {
+      color: #1db954;
     }
-    .nav-signup:hover,
-    .nav-signup:focus {
-      background: #1ed760;
-      color: #121212;
-    }
+
     /* HERO SECTION */
     .hero {
-      flex: 1 0 auto;
-      background: linear-gradient(135deg,#1edd60 20%,#1db954 80%);
+      background: linear-gradient(135deg, #1db954, #1ed760);
+      padding: 100px 40px;
       text-align: center;
-      padding: 90px 0 110px 0;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
     }
+
     .hero h1 {
-      font-size: 64px;
+      font-size: 60px;
       font-weight: 900;
-      margin: 0 0 20px;
-      letter-spacing: -0.01em;
-      color: #fff;
+      margin-bottom: 20px;
     }
+
     .hero p {
-      font-size: 24px;
-      font-weight: 400;
-      margin: 0 0 38px;
-      color: #fff;
-    }
-    .hero .cta-btn {
       font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    .hero button {
+      background-color: #000;
+      color: #1db954;
       font-weight: 700;
-      padding: 20px 60px;
+      padding: 14px 30px;
       border: none;
-      border-radius: 9999px;
-      background: #fff;
-      color: #1ed760;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.17);
-      cursor: pointer;
-      transition: background .15s,color .15s,transform .12s;
-      margin-top: 20px;
-      letter-spacing: 0.01em;
-    }
-    .hero .cta-btn:hover,
-    .hero .cta-btn:focus {
-      background: #1ed760;
-      color: #121212;
-      transform: scale(1.05);
-    }
-    /* Spot's floating circles background, only basic approx */
-    .hero-bg-circle {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.15;
-    }
-    .circle-1 {
-      width: 270px; height: 270px; background: #fff; left: 7vw; top: 43%; }
-    .circle-2 {
-      width: 170px; height: 170px; background: #1ed760; right: 8vw; top: 18%; }
-    .circle-3 {
-      width: 88px; height: 88px; background: #fff; right: 13vw; bottom: 25%; }
-    .circle-4 {
-      width: 55px; height: 55px; background: #1ed760; left: 35vw; bottom: 12%; }
-    /* FOOTER */
-    .footer {
-      background: #000;
-      padding: 65px 11vw 40px 11vw;
-      color: #b3b3b3;
-      font-size: 16px;
-      font-weight: 400;
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-    }
-    .footer-main {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 36px;
-      padding-bottom: 36px;
-      border-bottom: 1px solid #222;
-    }
-    .footer-logo {
-      width: 135px;
-      margin-bottom: 26px;
-    }
-    .footer-cols {
-      display: flex;
-      gap: 70px;
-      flex-wrap: wrap;
-    }
-    .footer-col {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      min-width: 140px;
-    }
-    .footer-col .col-title {
-      color: #fff;
-      font-weight: 700;
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-    .footer-col a {
-      color: #b3b3b3;
-      text-decoration: none;
-      transition: color 0.13s;
-      font-size: 16px;
-    }
-    .footer-col a:hover,
-    .footer-col a:focus {
-      color: #1ed760;
-    }
-    .footer-socials {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      margin-top: 8px;
-    }
-    .footer-socials a {
-      display: inline-flex;
-      padding: 8px;
-      border-radius: 50%;
-      background: #222;
-      transition: background .15s;
-      color: #b3b3b3;
-      line-height: 0;
-      font-size: 0;
-    }
-    .footer-socials a:hover,
-    .footer-socials a:focus {
-      background: #1ed760;
-      color: #121212;
-    }
-    /* Bottom copyrights & legal */
-    .footer-bottom {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      color: #b3b3b3;
-      margin-top: 26px;
-      font-size: 14px;
-    }
-    .footer-links {
-      display: flex;
-      gap: 28px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .footer-country {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-weight: 700;
-      color: #b3b3b3;
-      padding-right: 18px;
-      font-size: 13.5px;
-    }
-    /* Responsive styles */
-    @media (max-width: 900px) {
-      .footer-main { flex-direction: column; gap: 5vw; }
-      .footer-cols { gap: 32px; }
-    }
-    @media (max-width: 700px) {
-      .nav { padding: 0 8vw; }
-      .footer, .footer-main { padding: 30px 5vw; }
-    }
-    @media (max-width: 600px) {
-      .nav, .footer, .footer-main { padding: 12px 12px; }
-      .hero { padding: 54px 0 50px 0; }
-      .hero h1 { font-size: 2.2em; }
-      .hero p { font-size: 1.12em; }
-      .hero .cta-btn { padding: 12px 26px; font-size: 1em; }
-      .footer-cols { gap: 8vw; }
-      .footer-main { flex-direction: column; }
-      #ai-widget {
-        min-width: 96vw;
-        max-width: 99vw;
-        width: 99vw;
-        left: 0;
-        right: 0;
-        border-radius: 20px;
-        padding: 0;
-        min-height: 68vh;
-        max-height: 92vh;
-      }
-      #ai-assist-root {
-        right: 1vw; bottom: 2vw;
-      }
-      #ai-draggable-btn {
-        width: 46px; height: 46px; min-width: 42px;
-        box-shadow: 0 1.1px 7px #222c;
-      }
-      .ai-header {
-        padding: 11px 14px 8px 15px;
-        font-size: 1.12em;
-      }
-      .ai-bubble {
-        padding: 9px 13px;
-        font-size: 15px;
-        border-radius: 16px;
-        max-width: 98vw;
-      }
-      .ai-bubble-ai { border-bottom-left-radius: 5px; }
-      .ai-bubble-user { border-bottom-right-radius: 6px; }
-      .ai-chat-history {
-        padding: 12px 7px 0 7px;
-      }
-      .ai-playlist-mock {
-        padding: 6px 8px 6px 6px;
-        font-size: 13.9px;
-        border-radius: 9px;
-      }
-      .ai-playlist-mock .ai-playlist-cover {
-        width: 33px; height: 33px; border-radius: 6px;
-      }
-      .ai-playlist-mock .ai-playlist-title {
-        font-size: 1em; max-width: 70vw;
-      }
-      .ai-playlist-mock .ai-playlist-desc {
-        font-size: 11px; max-width: 90vw;
-      }
-      .ai-chat-input-row {
-        padding: 7px 7px 10px 7px;
-        gap: 3px;
-      }
-      .ai-chat-input-row input[name="prompt"] {
-        font-size: 14.2px;
-        padding: 8px 34px 8px 10px;
-        border-radius: 13px;
-      }
-      .ai-mic-btn, .ai-send-btn { min-width: 26px; min-height: 26px; }
-      .ai-send-btn {
-        right: 11px; padding: 2px; }
-      .ai-mic-btn svg,
-      .ai-send-btn svg { width: 22px !important; height: 22px !important; }
-      .ai-header .ai-close { padding:3px; }
-    }
-    @media (max-width: 370px) {
-      #ai-widget { min-width: 99vw; max-width: 100vw; border-radius: 10px; }
-      .ai-bubble { font-size: 13.4px; padding: 5px 7px; }
-      .ai-header { font-size: 1em; padding: 6px 6px 6px 10px; }
-    }
-    /* Hide UI cursor highlight outlines by default, only on tabbing */
-    :focus:not(:focus-visible) {
-      outline: none;
-    }
-    /* AI Assistant Styles */
-    #ai-assist-root {
-      position: fixed;
-      bottom: 28px;
-      right: 32px;
-      z-index: 50;
-      font-family: inherit;
-      pointer-events: none;
-    }
-    #ai-draggable-btn {
-      pointer-events: auto;
-      background: none;
-      border: none;
-      outline: none;
-      border-radius: 50%;
-      box-shadow: 0 2px 16px rgba(30,215,96,0.23), 0 1.5px 10px #2a2a2aed;
-      transition: box-shadow 0.13s;
-      width: 64px; height: 64px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: grab;
-      user-select: none;
-      position: absolute; right: 0; bottom: 0;
-    }
-    #ai-draggable-btn:active { cursor: grabbing; box-shadow: 0 4.5px 22px #222c; }
-    #ai-widget {
-      pointer-events: auto;
-      width: 384px;
-      max-width: 97vw;
-      min-height: 400px;
-      max-height: 74vh;
-      background: linear-gradient(140deg, #fff 84%, #1ed760 115%);
-      box-shadow: 0 7px 38px 0 #18181824, 0 1.5px 10px #151f1f13;
-      border-radius: 34px;
-      position: absolute;
-      right: 0; bottom: 0;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      animation: aiFadeIn .27s;
-    }
-    @keyframes aiFadeIn { from { transform: translateY(70px) scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
-    .ai-header {
-      background: none;
-      font-weight: 800;
-      font-size: 20px;
-      color: #181818;
-      padding: 18px 24px 10px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: 34px 34px 0 0;
-      border-bottom: 1.5px solid #eef1f2;
-      letter-spacing: -0.02em;
-    }
-    .ai-header .ai-close {
-      background: none;
-      border: none;
-      padding: 6px;
       border-radius: 999px;
       cursor: pointer;
-      transition: background .13s;
-      display: flex;
+      font-size: 16px;
     }
-    .ai-header .ai-close:hover,
-    .ai-header .ai-close:focus { background: #edeff0; }
-    .ai-chat-history {
-      flex: 1 1 0;
-      overflow-y: auto;
-      padding: 25px 20px 0 20px;
-      background: none;
-      display: flex;
-      flex-direction: column;
-      gap: 17px;
-      scrollbar-width: thin;
-      scroll-behavior: smooth;
-    }
-    .ai-bubble {
-      padding: 15px 25px;
-      border-radius: 24px;
-      margin-bottom: 2px;
-      font-size: 17px;
-      font-weight: 500;
-      line-height: 1.36;
-      max-width: 84%;
-      box-shadow: 0 4px 24px #90eac81a;
-      position: relative;
-      white-space: pre-line;
-    }
-    .ai-bubble-ai {
-      background: linear-gradient(98deg,#1ed760 50%,#b7ffae 180%);
-      color: #121212;
-      align-self: flex-start;
-      border-bottom-left-radius: 6px;
-      display: flex; align-items: flex-start; gap: 10px;
-    }
-    .ai-bubble-user {
-      background: #fff; color: #191a1b;
-      align-self: flex-end;
-      border-bottom-right-radius: 7px;
-    }
-    .ai-bubble-ai .ai-playlists {
-      margin-top: 6px;
-      display: flex; flex-direction: column; gap: 10px; width: 100%;
-    }
-    .ai-playlist-mock {
-      display: flex; align-items: center;
-      background: #fff; border-radius: 16px;
-      box-shadow: 0 2px 9px #41ffb122, 0 1px 3px #07070705;
-      padding: 8px 13px 8px 8px;
-      gap: 15px; min-width: 0;
-      font-size: 15.2px;
-      font-weight: 600; color: #171717;
-      line-height: 1.32;
-      animation: aiPlaylistFade .35s;
-    }
-    @keyframes aiPlaylistFade {
-      from { transform: translateY(32px) scale(.96); opacity: 0; } to { transform: none; opacity: 1; }
-    }
-    .ai-playlist-mock .ai-playlist-cover {
-      width: 46px; height: 46px; border-radius: 11px; background: #eee; flex-shrink: 0; overflow: hidden;
-    }
-    .ai-playlist-mock .ai-playlist-meta {
-      display: flex; flex-direction: column; gap: 3px; min-width: 0;
-    }
-    .ai-playlist-mock .ai-playlist-title {
-      font-weight: 800; color: #161616; font-size: 1.04em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;
-    }
-    .ai-playlist-mock .ai-playlist-desc {
-      color: #5e5e5e; font-weight: 400; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 172px;
-    }
-    .ai-bubble.ai-bubble-user { margin-left: auto; }
-    .ai-bubble.ai-bubble-ai { margin-right: auto; }
-    .ai-chat-input-row {
-      background: #f3f9f7;
-      border-top: 1.5px solid #f1f3f7;
-      padding: 13px 18px 15px 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      position: relative;
-    }
-    .ai-chat-input-row input[name="prompt"] {
-      flex: 1 1 0;
-      border: none;
-      background: #fff;
-      font-size: 17px;
-      border-radius: 20px;
-      padding: 11px 43px 11px 17px;
-      margin: 0 2px;
-      outline: none;
-      font-family: inherit;
-      color: #262626;
-      font-weight: 500;
-      box-shadow: 0 2px 9px #bbffed16;
-      transition: box-shadow .14s;
-    }
-    .ai-send-btn {
-      position: absolute; right: 20px;
-      background: none; border: none; cursor: pointer;
-      padding: 3px; border-radius: 50%; transition: background .13s;
-    }
-    .ai-send-btn:hover, .ai-send-btn:focus { background: #eafff6; }
-    .ai-mic-btn {
-      background: none; border: none;
-      cursor: pointer; color: #222;
-      margin-left: 0; padding: 2px 3px;
-      display: flex; align-items: center; border-radius: 99px; transition: background .13s;
-      min-width: 34px; min-height: 34px;
-    }
-    .ai-mic-btn:focus,.ai-mic-btn:hover { background: #eafff8; }
-    .ai-mic-btn.active svg { outline: 2.5px solid #1ed760; }
-    .ai-waveform { display: inline-block; margin-left: 2px; vertical-align: middle; }
-    /* Responsive for widget */
-    @media (max-width: 600px) {
-      #ai-widget { min-width: 96vw; max-width: 99vw; width: 99vw; left: 0; right: 0; border-radius: 20px; padding: 0; min-height: 68vh; max-height: 92vh; }
-      #ai-assist-root { right: 1vw; bottom: 2vw; }
-      #ai-draggable-btn { width: 46px; height: 46px; min-width: 42px; box-shadow: 0 1.1px 7px #222c; }
-      .ai-header { padding: 11px 14px 8px 15px; font-size: 1.12em; }
-      .ai-bubble { padding: 9px 13px; font-size: 15px; border-radius: 16px; max-width: 98vw; }
-      .ai-bubble-ai { border-bottom-left-radius: 5px; }
-      .ai-bubble-user { border-bottom-right-radius: 6px; }
-      .ai-chat-history { padding: 12px 7px 0 7px; }
-      .ai-playlist-mock { padding: 6px 8px 6px 6px; font-size: 13.9px; border-radius: 9px; }
-      .ai-playlist-mock .ai-playlist-cover { width: 33px; height: 33px; border-radius: 6px; }
-      .ai-playlist-mock .ai-playlist-title { font-size: 1em; max-width: 70vw; }
-      .ai-playlist-mock .ai-playlist-desc { font-size: 11px; max-width: 90vw; }
-      .ai-chat-input-row { padding: 7px 7px 10px 7px; gap: 3px; }
-      .ai-chat-input-row input[name="prompt"] { font-size: 14.2px; padding: 8px 34px 8px 10px; border-radius: 13px; }
-      .ai-mic-btn, .ai-send-btn { min-width: 26px; min-height: 26px; }
-      .ai-send-btn { right: 11px; padding: 2px; }
-      .ai-mic-btn svg, .ai-send-btn svg { width: 22px !important; height: 22px !important; }
-      .ai-header .ai-close { padding: 3px; }
-    }
-    @media (max-width: 370px) {
-      #ai-widget { min-width: 99vw; max-width: 100vw; border-radius: 10px; }
-      .ai-bubble { font-size: 13.4px; padding: 5px 7px; }
-      .ai-header { font-size: 1em; padding: 6px 6px 6px 10px; }
-    }
-  
-/* Hamburger Styles */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 32px;
-  height: 32px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-.hamburger span {
-  height: 3px;
-  width: 100%;
-  background: #fff;
-  border-radius: 3px;
-}
-@media (max-width: 768px) {
-  .hamburger { display: flex; }
-  .nav-menu { display: none; flex-direction: column; gap: 12px; background: #000; position: absolute; top: 80px; left: 0; width: 100%; padding: 20px 0; z-index: 20; }
-  .nav-menu.show { display: flex; }
-}
 
-</style>
+    .hero button:hover {
+      background-color: #1db954;
+      color: #000;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #000;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .footer-col {
+      flex: 1;
+      min-width: 180px;
+      margin-bottom: 20px;
+    }
+
+    .footer-col h4 {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #b3b3b3;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    /* AI ASSISTANT */
+    .ai-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #1db954;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: grab;
+      z-index: 1000;
+    }
+
+    .ai-button svg {
+      fill: #fff;
+      width: 24px;
+      height: 24px;
+    }
+
+    .ai-chat {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 300px;
+      max-height: 400px;
+      background: #282828;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      display: none;
+      flex-direction: column;
+      z-index: 999;
+    }
+
+    .ai-chat-header {
+      background: #1db954;
+      padding: 10px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .ai-chat-input {
+      display: flex;
+      border-top: 1px solid #444;
+    }
+
+    .ai-chat-input input {
+      flex: 1;
+      padding: 10px;
+      background: #121212;
+      color: #fff;
+      border: none;
+    }
+
+    .ai-chat-input button {
+      padding: 10px;
+      background: #1db954;
+      border: none;
+      cursor: pointer;
+      color: #000;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .user {
+      text-align: right;
+    }
+
+    .bot {
+      text-align: left;
+      color: #1db954;
+    }
+  </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav class="nav">
-    <div class="nav-left">
-      <a href="#" class="spotify-logo" aria-label="Spotify Home">
-        <!-- Inline SVG logo -->
-        <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" height="40"><g><circle cx="20" cy="20" r="20" fill="#1ED760"/><path fill="#fff" d="M29.1 27.4c-.3.5-1 .7-1.5.4-4.1-2.5-9.2-3.1-15.3-1.7-.6.1-1.2-.2-1.3-.8-.1-.6.2-1.2.8-1.3 6.7-1.5 12.2-.8 16.7 2  .5.3.7 1 .4 1.5zm2.2-4.3c-.4.6-1.1.9-1.7.5-4.7-2.9-11.9-3.8-17.5-2-.7.2-1.4-.2-1.5-.9C10.4 19 11 18.3 11.7 18c6.4-2 14.3-1.1 19.6 2.3.6.4.8 1.2.4 1.8zm2.4-4.6c-.5.7-1.4 1-2.1.5-5.4-3.3-14.1-3.6-19.3-1.9-.8.2-1.7-.2-1.9-1-.3-.8.2-1.7 1-1.9 6-1.9 15.5-1.6 21.6 2.2.7.3.9 1.2.4 2z"/></g><text x="46" y="27" font-family="SpotifyMixUI,Arial,sans-serif" font-size="26" font-weight="900" fill="#fff">Spotify</text></svg>
-      </a>
-      <ul class="nav-menu">
-        <li><a href="#">Premium</a></li>
-        <li><a href="#">Support</a></li>
-        <li><a href="#">Download</a></li>
-      </ul>
-    </div>
-    
-<button class="hamburger" aria-label="Toggle menu">
-  <span></span><span></span><span></span>
-</button>
 
-<div class="nav-right">
-      <button class="nav-signup">Sign up</button>
-      <button class="nav-login">Log in</button>
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-left">
+      <img src="data:image/svg+xml;base64,[BASE64_LOGO]" alt="Spotify Logo" />
+    </div>
+    <div class="nav-right">
+      <a href="#">Premium</a>
+      <a href="#">Support</a>
+      <a href="#">Download</a>
+      <a href="#">Sign Up</a>
+      <a href="#">Log In</a>
     </div>
   </nav>
 
-  <main class="hero">
-    <div class="hero-bg-circle circle-1"></div>
-    <div class="hero-bg-circle circle-2"></div>
-    <div class="hero-bg-circle circle-3"></div>
-    <div class="hero-bg-circle circle-4"></div>
-    <h1>Music for everyone.</h1>
-    <p>Millions of songs. No credit card needed.</p>
-    <button class="cta-btn">Sign up free</button>
-  </main>
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-main">
-      <div>
-        <a class="footer-logo" href="#" aria-label="Spotify Home">
-          <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" height="40"><g><circle cx="20" cy="20" r="20" fill="#1ED760"/><path fill="#fff" d="M29.1 27.4c-.3.5-1 .7-1.5.4-4.1-2.5-9.2-3.1-15.3-1.7-.6.1-1.2-.2-1.3-.8-.1-.6.2-1.2.8-1.3 6.7-1.5 12.2-.8 16.7 2  .5.3.7 1 .4 1.5zm2.2-4.3c-.4.6-1.1.9-1.7.5-4.7-2.9-11.9-3.8-17.5-2-.7.2-1.4-.2-1.5-.9C10.4 19 11 18.3 11.7 18c6.4-2 14.3-1.1 19.6 2.3.6.4.8 1.2.4 1.8zm2.4-4.6c-.5.7-1.4 1-2.1.5-5.4-3.3-14.1-3.6-19.3-1.9-.8.2-1.7-.2-1.9-1-.3-.8.2-1.7 1-1.9 6-1.9 15.5-1.6 21.6 2.2.7.3.9 1.2.4 2z"/></g><text x="46" y="27" font-family="SpotifyMixUI,Arial,sans-serif" font-size="26" font-weight="900" fill="#fff">Spotify</text></svg>
-        </a>
-        <div class="footer-socials">
-          <a href="#" aria-label="Instagram">
-            <!-- Instagram SVG -->
-            <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><rect width="24" height="24" rx="7" fill="currentColor" opacity="0.9"/><path fill="#fff" d="M12 8.512a3.49 3.49 0 100 6.976 3.49 3.49 0 000-6.976zM12 14.137a2.138 2.138 0 110-4.277 2.138 2.138 0 010 4.277zM16.185 7.537a.812.812 0 10-.001 1.624.812.812 0 00.001-1.624z" opacity="0.9"/></svg>
-          </a>
-          <a href="#" aria-label="Twitter">
-            <!-- Twitter SVG -->
-            <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><rect width="24" height="24" rx="7" fill="currentColor" opacity="0.9"/><path fill="#fff" d="M18.2 9.175a3.37 3.37 0 01-.965.264 1.686 1.686 0 00.74-.931 3.376 3.376 0 01-1.07.409 1.678 1.678 0 00-2.859 1.53A4.763 4.763 0 017.892 8.6a1.68 1.68 0 00-.227.844c0 .582.296 1.096.747 1.397A1.671 1.671 0 017.1 10.642v.021a1.68 1.68 0 001.347 1.653c-.072.02-.149.031-.228.031-.055 0-.108-.005-.16-.015.107.336.419.58.788.587A3.372 3.372 0 016 16.096a4.751 4.751 0 002.573.755c3.09 0 4.783-2.56 4.783-4.783 0-.073-.001-.146-.005-.218A3.423 3.423 0 0018.2 9.175z"/></svg>
-          </a>
-          <a href="#" aria-label="Facebook">
-            <!-- Facebook SVG -->
-            <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><rect width="24" height="24" rx="7" fill="currentColor" opacity="0.9"/><path fill="#fff" d="M13.297 9.386h1.156V7.909c-.207-.029-.921-.09-1.75-.09-1.729 0-2.907 1.101-2.907 3.125v1.417H7.02V15.14h2.776v5.728h2.501V15.14h2.074l.263-2.779h-2.337v-1.044c0-.8.18-1.209 1-1.209z"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <div class="col-title">Company</div>
-          <a href="#">About</a>
-          <a href="#">Jobs</a>
-          <a href="#">For the Record</a>
-        </div>
-        <div class="footer-col">
-          <div class="col-title">Communities</div>
-          <a href="#">For Artists</a>
-          <a href="#">Developers</a>
-          <a href="#">Advertising</a>
-          <a href="#">Investors</a>
-          <a href="#">Vendors</a>
-        </div>
-        <div class="footer-col">
-          <div class="col-title">Useful links</div>
-          <a href="#">Support</a>
-          <a href="#">Web Player</a>
-          <a href="#">Free Mobile App</a>
-        </div>
-      </div>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Listening is everything</h1>
+    <p>Millions of songs and podcasts. No credit card needed.</p>
+    <button>Get Spotify Free</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About</a>
+      <a href="#">Jobs</a>
+      <a href="#">For the Record</a>
     </div>
-    <div class="footer-bottom">
-      <div class="footer-country">
-        <!-- World Icon -->
-        <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm5.937 6H11.5a6.13 6.13 0 00-.8-3.11A5.017 5.017 0 0113.937 7zM8 2.062c.72.81 1.385 1.923 1.776 3.438H6.224c.39-1.515 1.056-2.628 1.776-3.438zm-2.2.83A6.13 6.13 0 005.5 7H2.063A5.017 5.017 0 015.8 2.891zm-3.4 5.03H5.5c.07 1.095.297 2.14.722 3.11A5.015 5.015 0 012.4 7.921zM8 13.938c-.72-.81-1.386-1.922-1.776-3.438h3.553c-.39 1.516-1.057 2.629-1.777 3.438zM9.5 9.062h-3c-.09-.5-.15-1.033-.17-1.562h3.34c-.02.529-.08 1.062-.17 1.562zm.278 1.428A6.128 6.128 0 0010.5 9h3.438A5.018 5.018 0 0110.78 10.49zm3.421-2.491H10.5a6.15 6.15 0 00-.722-3.11A5.015 5.015 0 0113.979 7.999z"/></svg>
-        United States
-      </div>
-      <div class="footer-links">
-        <a href="#">Legal</a>
-        <a href="#">Privacy Center</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Cookies</a>
-        <a href="#">About Ads</a>
-        <a href="#">Accessibility</a>
-      </div>
-      <div>&copy; 2024 Spotify AB</div>
+    <div class="footer-col">
+      <h4>Communities</h4>
+      <a href="#">For Artists</a>
+      <a href="#">Developers</a>
+      <a href="#">Advertising</a>
+    </div>
+    <div class="footer-col">
+      <h4>Useful Links</h4>
+      <a href="#">Support</a>
+      <a href="#">Web Player</a>
+      <a href="#">Free Mobile App</a>
     </div>
   </footer>
-  <!-- Floating AI Music Assistant Widget -->
-  <div id="ai-assist-root">
-    <div id="ai-draggable-btn" tabindex="0" aria-label="Open Spotify AI Assistant">
-      <svg height="48" width="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#1ed760"/><path fill="#121212" d="M16 24a8 8 0 1016 0 8 8 0 00-16 0zm6-4h4a1 1 0 010 2h-4a1 1 0 010-2zm0 8h4a1 1 0 010 2h-4a1 1 0 110-2zm-2-4a1 1 0 110-2 1 1 0 010 2zm8 0a1 1 0 100-2 1 1 0 100 2z"/></svg>
-    </div>
-    <div id="ai-widget" aria-modal="true" aria-label="AI Music Assistant" style="display:none">
-      <div class="ai-header">
-        <span>Music Assistant</span>
-        <button class="ai-close" aria-label="Close">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M7 7l10 10M17 7l-10 10" stroke="#222" stroke-width="2.5" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-      <div class="ai-chat-history">
-        <div class="ai-bubble ai-bubble-ai ai-hello">
-          <span><svg width="22" height="22" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#1ed760"/><path fill="#121212" d="M16 24a8 8 0 1016 0 8 8 0 00-16 0zm6-4h4a1 1 0 010 2h-4a1 1 0 010-2zm0 8h4a1 1 0 010 2h-4a1 1 0 110-2zm-2-4a1 1 0 110-2 1 1 0 010 2zm8 0a1 1 0 100-2 1 1 0 100 2z"/></svg></span>
-          Hi, I’m your AI music assistant! Ask for any playlist, mood, or music you want 🎶
-        </div>
-      </div>
-      <form class="ai-chat-input-row" autocomplete="off">
-        <button type="button" class="ai-mic-btn" aria-label="Toggle voice input">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#222"/><rect x="9" y="6.5" width="6" height="11" rx="3" fill="#1ed760"/><rect x="11" y="18" width="2" height="2" rx="1" fill="#aaa"/></svg>
-          <span class="ai-waveform" style="display:none"><svg width="38" height="24"><polyline points="1,12 6,3 13,21 20,5 26,20 33,5 37,12" stroke="#1ed760" stroke-width="3" fill="none"><animate attributeName="points" values="1,12 6,3 13,21 20,5 26,20 33,5 37,12;1,9 6,21 13,7 20,17 26,5 33,17 37,10;1,12 6,3 13,21 20,5 26,20 33,5 37,12" dur="1s" repeatCount="indefinite"/></polyline></svg></span>
-        </button>
-        <input name="prompt" type="text" autocomplete="off" placeholder="Ask for any playlist" required />
-        <button type="submit" class="ai-send-btn" aria-label="Send"><svg width="27" height="27" viewBox="0 0 20 20" fill="none"><path fill="#1ed760" d="M2 16l16-6-16-6v5l11 1-11 1z"/></svg></button>
-      </form>
+
+  <!-- AI MUSIC ASSISTANT -->
+  <div class="ai-button" id="ai-btn" title="Music Assistant">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm0 20c4.418 0 8-2.686 8-6h-2c0 2.21-2.239 4-6 4s-6-1.79-6-4H4c0 3.314 3.582 6 8 6z"/></svg>
+  </div>
+
+  <div class="ai-chat" id="ai-chat">
+    <div class="ai-chat-header">AI Music Assistant</div>
+    <div class="ai-chat-messages" id="chat-messages"></div>
+    <div class="ai-chat-input">
+      <input type="text" id="user-input" placeholder="Ask me to build a playlist..." />
+      <button id="send-btn">Send</button>
     </div>
   </div>
-  <script>// AI Widget logic
 
-// Hamburger toggle
-document.querySelector('.hamburger').addEventListener('click', function () {
-  document.querySelector('.nav-menu').classList.toggle('show');
-});
+  <script>
+    // Toggle Chat
+    const aiBtn = document.getElementById('ai-btn');
+    const aiChat = document.getElementById('ai-chat');
+    const sendBtn = document.getElementById('send-btn');
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
 
-  (function(){
-    const aiBtn = document.getElementById('ai-draggable-btn');
-    const aiWidget = document.getElementById('ai-widget');
-    const aiRoot = document.getElementById('ai-assist-root');
-    const inputForm = aiWidget.querySelector('.ai-chat-input-row');
-    const closeBtn = aiWidget.querySelector('.ai-close');
-    let dragging = false, offset = {x:0,y:0};
-    let lastPos = {x: null, y: null}; // In px
-    // Draggable logic
-    function setBtnPos(x, y) {
-      aiRoot.style.right = x + 'px';
-      aiRoot.style.bottom = y + 'px';
-      lastPos = {x, y};
-    }
-    aiBtn.addEventListener('mousedown', e => {
-      dragging = true;
-      const rect = aiRoot.getBoundingClientRect();
-      offset.x = e.clientX - rect.right;
-      offset.y = e.clientY - rect.bottom;
-      document.body.style.userSelect = 'none';
-    });
-    window.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      let x = window.innerWidth - e.clientX - offset.x - aiBtn.offsetWidth/2;
-      let y = window.innerHeight - e.clientY - offset.y - aiBtn.offsetHeight/2;
-      x = Math.max(0, Math.min(x, window.innerWidth - aiBtn.offsetWidth));
-      y = Math.max(0, Math.min(y, window.innerHeight - aiBtn.offsetHeight));
-      setBtnPos(x, y);
-    });
-    window.addEventListener('mouseup',()=>{ dragging=false; document.body.style.userSelect=''; });
-    aiBtn.addEventListener('touchstart', e=>{
-      dragging = true;
-      const rect = aiRoot.getBoundingClientRect();
-      offset.x = e.touches[0].clientX - rect.right;
-      offset.y = e.touches[0].clientY - rect.bottom;
-    },{passive:true});
-    window.addEventListener('touchmove', e => {
-      if (!dragging) return;
-      let x = window.innerWidth - e.touches[0].clientX - offset.x - aiBtn.offsetWidth/2;
-      let y = window.innerHeight - e.touches[0].clientY - offset.y - aiBtn.offsetHeight/2;
-      x = Math.max(0, Math.min(x, window.innerWidth - aiBtn.offsetWidth));
-      y = Math.max(0, Math.min(y, window.innerHeight - aiBtn.offsetHeight));
-      setBtnPos(x, y);
-    },{passive:true});
-    window.addEventListener('touchend',()=>{ dragging=false; });
-    // Toggle widget
     aiBtn.onclick = () => {
-      aiWidget.style.display='block';
-      setTimeout(()=>aiWidget.querySelector('input[name="prompt"]').focus(),50);
+      aiChat.style.display = aiChat.style.display === 'flex' ? 'none' : 'flex';
     };
-    closeBtn.onclick = () => { aiWidget.style.display='none'; };
-    // Hide with ESC
-    window.addEventListener('keydown',e=>{if(e.key==='Escape')aiWidget.style.display='none';});
-    // Chat
-    const historyDiv = aiWidget.querySelector('.ai-chat-history');
-    function scrollToBottom(){ setTimeout(()=>{historyDiv.scrollTop=historyDiv.scrollHeight;},30); }
-    function addBubble(type, text, extraHTML='') {
-      const div = document.createElement('div');
-      div.className = 'ai-bubble ' + (type==='ai'?'ai-bubble-ai':'ai-bubble-user');
-      if(type==='ai'){
-        div.innerHTML = '<span><svg width="22" height="22" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#1ed760"/><path fill="#121212" d="M16 24a8 8 0 1016 0 8 8 0 00-16 0zm6-4h4a1 1 0 010 2h-4a1 1 0 010-2zm0 8h4a1 1 0 010 2h-4a1 1 0 110-2zm-2-4a1 1 0 110-2 1 1 0 010 2zm8 0a1 1 0 100-2 1 1 0 100 2z"/></svg></span>' + text + extraHTML;
-      } else {
-        div.textContent = text;
-      }
-      historyDiv.appendChild(div);scrollToBottom();return div;
+
+    sendBtn.onclick = () => {
+      const query = userInput.value.trim();
+      if (!query) return;
+      appendMessage(query, 'user');
+      userInput.value = '';
+      setTimeout(() => {
+        const mockResponse = generateMockPlaylist(query);
+        appendMessage(mockResponse, 'bot');
+      }, 1000);
+    };
+
+    function appendMessage(msg, type) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${type}`;
+      msgDiv.innerText = msg;
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-    // Fake playlist cover art (a few from same-assets)
-    const playlistImgs = [
-      'https://ext.same-assets.com/2220852004/502798200.jpeg',
-      'https://ext.same-assets.com/2220852004/983272482.jpeg',
-      'https://ext.same-assets.com/2220852004/3900468021.jpeg',
-      'https://ext.same-assets.com/2220852004/884134228.jpeg',
-      'https://ext.same-assets.com/2220852004/2116876969.jpeg',
-      'https://ext.same-assets.com/2220852004/3318915964.jpeg',
-      'https://ext.same-assets.com/2220852004/3970406158.jpeg',
-    ];
-    function mockAIResponse(query){
-      const moods = ['coding','party','focus','workout','relaxing','study','hits','throwback','lofi'];
-      let seed = Math.floor(Math.random()*playlistImgs.length);
-      let pnum = 2+Math.floor(Math.random()*2);
-      let mood = query.match(/coding|party|focus|workout|chill|relax|study|track|lofi/i)?.[0]||moods[Math.floor(Math.random()*moods.length)];
-      let playlists = Array.from({length:pnum}).map((_,i)=>`
-        <div class="ai-playlist-mock">
-          <div class="ai-playlist-cover"><img src="${playlistImgs[(seed+i)%playlistImgs.length]}" width="46" height="46" alt="Playlist art" /></div>
-          <div class="ai-playlist-meta">
-            <div class="ai-playlist-title">${(mood.charAt(0).toUpperCase()+mood.slice(1))} Mix #${i+1}</div>
-            <div class="ai-playlist-desc">${['The top tracks for', 'Curated tunes for', 'A soundtrack to', 'Perfect for'].sort(()=>.5-Math.random())[0]} ${mood} • Mock AI</div>
-          </div>
-        </div>`).join('');
-      return `<div class="ai-playlists">${playlists}</div>`;
+
+    function generateMockPlaylist(query) {
+      return `Here's a playlist for: "${query}"\n1. Focus Beats\n2. Lofi Coding\n3. Deep Work Sessions\n4. Ambient Concentration`;
     }
-    // Typing simulation
-    let aiTypingIndicator = null;
-    function showTypingInd(){
-      if(aiTypingIndicator)return;
-      aiTypingIndicator = addBubble('ai','<em>Assistant is typing...</em>');
-    }
-    function hideTypingInd(){
-      if(aiTypingIndicator){
-        historyDiv.removeChild(aiTypingIndicator);
-        aiTypingIndicator=null;
-      }
-    }
-    inputForm.addEventListener('submit',e=>{
+
+    // Optional: Make button draggable
+    aiBtn.onmousedown = function (e) {
       e.preventDefault();
-      const input = inputForm.elements['prompt'];
-      const val = input.value.trim();
-      if(!val) return;
-      addBubble('user',val);
-      input.value='';
-      showTypingInd();
-      setTimeout(()=>{
-        hideTypingInd();
-        addBubble('ai',`Here’s a playlist for: <strong>${val.replace(/</g,'&lt;')}</strong>`,mockAIResponse(val));
-      },950+Math.random()*600);
-    });
-    // Mic waveform toggle
-    const micBtn = inputForm.querySelector('.ai-mic-btn');
-    const waveform = micBtn.querySelector('.ai-waveform');
-    let listening = false;
-    micBtn.onclick = () => {
-      listening = !listening;
-      waveform.style.display = listening ? 'inline-block' : 'none';
-      micBtn.classList.toggle('active', listening);
+      let shiftX = e.clientX - aiBtn.getBoundingClientRect().left;
+      let shiftY = e.clientY - aiBtn.getBoundingClientRect().top;
+
+      function moveAt(pageX, pageY) {
+        aiBtn.style.left = pageX - shiftX + 'px';
+        aiBtn.style.top = pageY - shiftY + 'px';
+        aiBtn.style.bottom = 'auto';
+        aiBtn.style.right = 'auto';
+        aiBtn.style.position = 'fixed';
+      }
+
+      function onMouseMove(e) {
+        moveAt(e.pageX, e.pageY);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      aiBtn.onmouseup = function () {
+        document.removeEventListener('mousemove', onMouseMove);
+        aiBtn.onmouseup = null;
+      };
     };
-  })();
+
+    aiBtn.ondragstart = () => false;
   </script>
 </body>
 </html>
