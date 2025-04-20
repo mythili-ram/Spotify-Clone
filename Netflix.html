@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Netflix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #141414;
+      color: #fff;
+    }
+
+    header {
+      background-color: #000;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header img {
+      height: 40px;
+    }
+
+    .hero {
+      background: url('https://assets.nflxext.com/ffe/siteui/vlv3/0b0f2c7e-896a-4f70-8c02-d3ae0f6762f0/69cb93fc-08e9-493c-9c3f-3b885d1f8873/US-en-20240408-popsignuptwoweeks-perspective_alpha_website_large.jpg') no-repeat center center/cover;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin: 0;
+    }
+
+    .hero h2 {
+      font-size: 1.5em;
+      font-weight: 400;
+      margin: 20px 0;
+    }
+
+    .hero input {
+      padding: 10px;
+      width: 300px;
+      max-width: 90%;
+      font-size: 1em;
+      border: none;
+      margin-top: 10px;
+    }
+
+    .hero button {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin-left: 10px;
+      background-color: #e50914;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .recommendation-section {
+      padding: 40px;
+      background-color: #000;
+    }
+
+    .recommendation-section h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .recommendations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .recommendation {
+      background-color: #222;
+      padding: 10px;
+      border-radius: 5px;
+      width: 180px;
+    }
+
+    .recommendation img {
+      width: 100%;
+      border-radius: 3px;
+    }
+
+    .recommendation h3 {
+      margin: 10px 0 5px;
+      font-size: 1em;
+    }
+
+    .recommendation p {
+      font-size: 0.9em;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" />
+  </header>
+
+  <section class="hero">
+    <h1>Unlimited movies, TV shows, and more</h1>
+    <h2>Watch anywhere. Cancel anytime.</h2>
+    <div>
+      <input type="text" id="preferenceInput" placeholder="What do you feel like watching?" />
+      <button onclick="getRecommendations()">Get Recommendations</button>
+    </div>
+  </section>
+
+  <section class="recommendation-section" id="recommendationSection" style="display:none;">
+    <h2>Top Picks Just for You</h2>
+    <div class="recommendations" id="recommendationList"></div>
+  </section>
+
+  <script>
+    const mockData = [
+      {
+        title: "Stranger Things",
+        genre: "Sci-Fi, Thriller",
+        keywords: ["thriller", "teen", "supernatural", "adventure"],
+        image: "https://occ-0-64-185.1.nflxso.net/dnm/api/v6/LwBepCMvSUmCZjR0z5xkrylvYzQ/AAAABR9ZTmoJbNwzFKngzSejvFuWHz4Y3mFd1On1PXO_XKfuTrrKXfFTo3fY0LSitZkaSLlSTyFiApnh4Yd4aDSdclFG4Uo.jpg"
+      },
+      {
+        title: "The Crown",
+        genre: "Drama, History",
+        keywords: ["royalty", "drama", "history", "biography"],
+        image: "https://occ-0-64-185.1.nflxso.net/dnm/api/v6/LwBepCMvSUmCZjR0z5xkrylvYzQ/AAAABYJq2XZ-2Hj3a6-EONbHQzxJbslrdtxMdKaCN7eeASLJ5R1VvnbJpGmgHgJ5tnpE-mh8PhDZyytzmnLa1KQ1ghuPcdGk.jpg"
+      },
+      {
+        title: "Breaking Bad",
+        genre: "Crime, Drama",
+        keywords: ["crime", "drama", "drugs", "anti-hero"],
+        image: "https://occ-0-64-185.1.nflxso.net/dnm/api/v6/LwBepCMvSUmCZjR0z5xkrylvYzQ/AAAABUjPuEmvFdZ_j2ZVuV83Sqp2OnU61UeojRfmxAX3Tgw9XmsbM4QNNnxXlznQQbLgVN06H-sHr8mspwPewTLtyDbf3Mc.jpg"
+      },
+      {
+        title: "Bridgerton",
+        genre: "Romance, Drama",
+        keywords: ["romance", "drama", "costume", "society"],
+        image: "https://occ-0-64-185.1.nflxso.net/dnm/api/v6/LwBepCMvSUmCZjR0z5xkrylvYzQ/AAAABcoDYBtVw8W_JT_dEEiEvzSCFJINWdDRi1keKIt_Mz4EhdM5zH7P3pVkVf-cfTD85hbgZImnpYkZIE_LaHNTcEIMsKM.jpg"
+      }
+    ];
+
+    function getRecommendations() {
+      const input = document.getElementById('preferenceInput').value.toLowerCase();
+      const matches = mockData.filter(item =>
+        item.keywords.some(keyword => input.includes(keyword))
+      );
+
+      const container = document.getElementById('recommendationList');
+      container.innerHTML = '';
+
+      const section = document.getElementById('recommendationSection');
+      section.style.display = 'block';
+
+      if (matches.length === 0) {
+        container.innerHTML = "<p>No matches found. Try another keyword!</p>";
+        return;
+      }
+
+      matches.forEach(movie => {
+        const card = document.createElement('div');
+        card.className = 'recommendation';
+        card.innerHTML = `
+          <img src="${movie.image}" alt="${movie.title}">
+          <h3>${movie.title}</h3>
+          <p>${movie.genre}</p>
+          <p>Because you liked ${movie.keywords[0]}...</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
